@@ -64,7 +64,25 @@ Std_ReturnType lcd_4bit_send_command(const chr_lcd_4bit_t *lcd, uint8_t command)
 
 
 Std_ReturnType lcd_4bit_send_char_data(const chr_lcd_4bit_t *lcd, uint8_t data){
+    Std_ReturnType ret = E_OK;
+    if(NULL == lcd){
+        ret = E_NOT_OK;
+    }
+    else{
+        /**< Set RS pin to high for data --> RS = 1 */
+        gpio_digital_port_write(lcd->lcd_rs.port , lcd->lcd_rs.pin , HIGH);
+        /** Set RW pin to low for write  --> RW = 0 *//////
+        /* Send the data through the 4-Pins" Data lines */
+        ret = lcd_send_4bits(lcd, data >> 4);
+        /* Send the Enable Signal  */
+        ret = lcd_4bit_send_enable_signal(lcd);
+        /* Send the data through the (4-Pins" Data lines */
+        ret = lcd_send_4bits(lcd, data);
+        /* Send the Enable Signal on the "E" Pin */
+        ret = lcd_4bit_send_enable_signal(lcd);
 
+    }
+    return ret;
 }
 
 
@@ -82,7 +100,20 @@ Std_ReturnType lcd_4bit_send_char_data_pos(const chr_lcd_4bit_t *lcd,uint8_t row
 
 
 Std_ReturnType lcd_4bit_send_string(const chr_lcd_4bit_t *lcd, uint8_t *str){
+    Std_ReturnType ret = E_OK;
+    if(NULL == lcd || str==NULL){
+        ret = E_NOT_OK;
+    }
+    else{
+        uint8_t Local_u8Counter = 0;
+        while(str[Local_u8Counter]!='\0')
+        {
+           lcd_4bit_send_char_data(lcd ,str[Local_u8Counter]);
+            Local_u8Counter++;
+        }
 
+    }
+    return ret;
 }
 
 
@@ -164,7 +195,21 @@ Std_ReturnType lcd_8bit_send_command(const chr_lcd_8bit_t *lcd, uint8_t command)
 
 
 Std_ReturnType lcd_8bit_send_char_data(const chr_lcd_8bit_t *lcd, uint8_t data){
+    Std_ReturnType ret = E_OK;
+    if(NULL == lcd){
+        ret = E_NOT_OK;
+    }
+    else{
 
+        /* Set RS pin to low for command --> RS = 1 */
+        gpio_digital_port_write(lcd->lcd_rs.port , lcd->lcd_rs.pin , HIGH);
+        /* Send the Command through the "8-Pins" Data lines */
+        ret = lcd_send_8_bits(lcd, data);
+        /* Send the Enable Signal on the "E" Pin */
+        ret = lcd_8bit_send_enable_signal(lcd);
+
+    }
+    return ret;
 }
 
 
@@ -182,7 +227,19 @@ Std_ReturnType lcd_8bit_send_char_data_pos(const chr_lcd_8bit_t *lcd,uint8_t row
 
 
 Std_ReturnType lcd_8bit_send_string(const chr_lcd_8bit_t *lcd, uint8_t *str){
-
+    Std_ReturnType ret = E_OK;
+    if(NULL == lcd || str==NULL){
+        ret = E_NOT_OK;
+    }
+    else{
+        uint8_t Local_u8Counter = 0;
+        while(str[Local_u8Counter]!='\0')
+        {
+           lcd_8bit_send_char_data(lcd ,str[Local_u8Counter]);
+            Local_u8Counter++;
+        }
+    }
+    return ret;
 }
 
 
@@ -231,7 +288,17 @@ static Std_ReturnType lcd_send_4bits(const chr_lcd_4bit_t *lcd, uint8_t _data_co
 
 
 static Std_ReturnType lcd_send_8_bits(const chr_lcd_8bit_t *lcd, uint8_t _data_command){
+   Std_ReturnType ret = E_OK;
+    gpio_digital_port_write(lcd->lcd_data[0].port, lcd->lcd_data[0].pin, (_data_command >> 0) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[1].port, lcd->lcd_data[1].pin, (_data_command >> 1) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[2].port, lcd->lcd_data[2].pin, (_data_command >> 2) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[3].port, lcd->lcd_data[3].pin, (_data_command >> 3) & (uint8_t)0x01);
+	  gpio_digital_port_write(lcd->lcd_data[4].port, lcd->lcd_data[4].pin, (_data_command >> 4) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[5].port, lcd->lcd_data[5].pin, (_data_command >> 5) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[6].port, lcd->lcd_data[6].pin, (_data_command >> 6) & (uint8_t)0x01);
+    gpio_digital_port_write(lcd->lcd_data[7].port, lcd->lcd_data[7].pin, (_data_command >> 7) & (uint8_t)0x01);
 
+  	return ret;
 }
 
 
@@ -289,4 +356,10 @@ static Std_ReturnType lcd_4bit_set_cursor(const chr_lcd_4bit_t *lcd, uint8_t row
         default : ;
     }
     return ret;
-}
+} 
+ //int main(){}
+
+
+
+
+
