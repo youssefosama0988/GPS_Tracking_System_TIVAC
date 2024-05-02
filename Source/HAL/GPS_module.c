@@ -88,3 +88,40 @@ int GPS_read(char *GPS_module)
     return flag;
 }
 
+
+void GPS_output_format(){
+	char numOfGPSElements=0;
+do{
+pointer=strtok(GPS_module,",");
+
+strcpy(logElements[numOfGPSElements],GPS_module);
+	pointer=strtok(NULL,",");
+	numOfGPSElements++;
+}while(pointer!=NULL);
+
+//then we will get the current long and lat :)
+
+// here we check the validity of the string formated gps_module
+if(strcmp(logElements[0],"A")==0)
+{
+
+
+// to get the current long:)
+if(strcmp(logElements[3],"N")==0)
+	currLong=atof(logElements[2]);
+else if(strcmp(logElements[3],"S")==0)
+ currLong=-atof(logElements[2]);
+
+ //to get the current latitude:)
+if(strcmp(logElements[5],"E")==0)
+	currLatit=atof(logElements[4]);
+else if(strcmp(logElements[5],"W")==0)
+ currLatit=-atof(logElements[4]);
+
+
+}
+
+
+}
+
+
