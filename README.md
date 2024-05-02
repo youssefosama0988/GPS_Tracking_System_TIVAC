@@ -1,5 +1,15 @@
+<div align="center">
+  <img src="https://i.imgur.com/RKTSGKg.png" alt="FOE ASU Logo" width="150"/>
+</div>
+
+<h1 align="center"> CSE 211s [Spring 2024] 
+Introduction to Embedded 
+Systems </h1>
+
 # GPS-Tracking-System
+
 ## Project Description
+  --------
 The goal of this project is to develop an embedded system using C programming that 
 gathers real-time positional coordinates while a microcontroller is in motion (GPS tracking 
 system using TM4C123G LaunchPad) after power-on until a destination point is reached. 
@@ -18,3 +28,9 @@ point, stop adding new points to the trajectory.
 turned on.
 2. The system should check for UART commands from the PC and if the PC sends
 the command ‘U’ then the system should send the stored trajectory to the PC.
+## Project Instructions
+  --------
+1. Download the [kit header file ](https://drive.google.com/file/d/1Gyt1VkYgfyEYHeF1VL6ivI9W2FQkB-GQ/view?usp=sharing) to include it to use its defined 
+macros in your code
+2. Your implementation should be in embedded C.
+3. The demo video should be taken as one shot without cuts or edits.
