@@ -36,13 +36,13 @@ macros in your code
 3. The demo video should be taken as one shot without cuts or edits.
 ## Project Requirements:
   --------
-### Hardware:
-1. A microcontroller development board (e.g., TivaC)
-2. A GPS module (or a compatible sensor that provides positional data)
-3. A personal computer (PC)💻
-4. Connecting cables (USB, serial, etc.)
- ### Software:
-5. A C-development environment (e.g., Keil)
-6. A PC-based application development environment suitable for data 
-visualization (e.g., Python with Matplotlib or a mapping API)
+### ✨ Hardware:
+> - A microcontroller development board (e.g., TivaC)
+> - A GPS module (or a compatible sensor that provides positional data)
+> - A personal computer (PC)💻
+> - Connecting cables (USB, serial, etc.)
+ ### ✨ Software:
+> - A C-development environment (e.g., Keil)
+> - A PC-based application development environment suitable for data 
+> -visualization (e.g., Python with Matplotlib or a mapping API)
 
