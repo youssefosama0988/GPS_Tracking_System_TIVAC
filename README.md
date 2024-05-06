@@ -34,3 +34,15 @@ the command ‘U’ then the system should send the stored trajectory to the PC.
 macros in your code
 2. Your implementation should be in embedded C.
 3. The demo video should be taken as one shot without cuts or edits.
+## Project Requirements:
+  --------
+### ✨ Hardware:
+> - A microcontroller development board (e.g., TivaC)
+> - A GPS module (or a compatible sensor that provides positional data)
+> - A personal computer (PC)💻
+> - Connecting cables (USB, serial, etc.)
+ ### ✨ Software:
+> - A C-development environment (e.g., Keil)
+> - A PC-based application development environment suitable for data 
+> -visualization (e.g., Python with Matplotlib or a mapping API)
+
