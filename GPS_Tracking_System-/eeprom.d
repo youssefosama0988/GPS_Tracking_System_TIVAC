@@ -1,0 +1,12 @@
+.\eeprom.o: GPS_Tracking_System-\Source\MCAL\eeprom.c
+.\eeprom.o: GPS_Tracking_System-\Source\MCAL\../../Headers/MCAL/eeprom.h
+.\eeprom.o: C:\Keil\ARM\Inc\TI\TM4C123\tm4c123gh6pm.h
+.\eeprom.o: C:\Keil\ARM\CMSIS\Include\core_cm4.h
+.\eeprom.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\eeprom.o: C:\Keil\ARM\CMSIS\Include\core_cmInstr.h
+.\eeprom.o: C:\Keil\ARM\CMSIS\Include\core_cmFunc.h
+.\eeprom.o: C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h
+.\eeprom.o: C:\Keil\ARM\Inc\TI\TM4C123\system_TM4C123.h
+.\eeprom.o: GPS_Tracking_System-\Source\MCAL\../../Headers/MCAL/SysTick.h
+.\eeprom.o: GPS_Tracking_System-\Source\MCAL\../../Headers/MCAL/../Services/types.h
+.\eeprom.o: GPS_Tracking_System-\Source\MCAL\../../Headers/MCAL/../Services/TM4C123.h

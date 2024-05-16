@@ -1,0 +1,13 @@
+.\app.o: GPS_Tracking_System-\Source\APP\APP.c
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/MCAL/GPIO.h
+.\app.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/MCAL/../Services/TM4C123.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/MCAL/../Services/types.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/MCAL/SysTick.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/MCAL/UART.h
+.\app.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/HAL/GPS_module.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/HAL/GPS_mohamed.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/HAL/LCD.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../Headers/HAL/LED.h
+.\app.o: GPS_Tracking_System-\Source\APP\../../../LCD_.h
