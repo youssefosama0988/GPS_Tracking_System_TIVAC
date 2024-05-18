@@ -10,6 +10,7 @@ static Std_ReturnType lcd_4bit_set_cursor(const chr_lcd_4bit_t *lcd, uint8_t row
 static Std_ReturnType lcd_8bit_send_enable_signal(const chr_lcd_8bit_t *lcd);
 static Std_ReturnType lcd_8bit_set_cursor(const chr_lcd_8bit_t *lcd, uint8_t row, uint8_t coulmn);
 
+
 /*---------------------------Implementations of the Functions----------------------------*/
 
 Std_ReturnType lcd_4bit_intialize(const chr_lcd_4bit_t *lcd){
@@ -157,11 +158,11 @@ Std_ReturnType lcd_8bit_intialize(const chr_lcd_8bit_t *lcd){
         for(; l_counter<8; l_counter++){
             gpio_digital_port_init(lcd->lcd_data[l_counter].port , lcd->lcd_data[l_counter].pin , lcd->lcd_data[l_counter].direction );
         }
-        delay_ms(20);
+        delay_ms(200);
         ret = lcd_8bit_send_command(lcd, _LCD_8BIT_MODE_2_LINE);
-        delay_ms(5);
+        delay_ms(200);
         ret = lcd_8bit_send_command(lcd, _LCD_8BIT_MODE_2_LINE);
-        delay_us(150);
+        delay_us(700);
         ret = lcd_8bit_send_command(lcd, _LCD_8BIT_MODE_2_LINE);
 
         ret = lcd_8bit_send_command(lcd, _LCD_CLEAR);
@@ -271,7 +272,7 @@ Std_ReturnType lcd_8bit_send_custom_char(const chr_lcd_8bit_t *lcd, uint8_t row,
 
 Std_ReturnType convert_uint8_to_string (uint8_t value, uint8_t *str);
 Std_ReturnType convert_uint16_to_string(uint8_t value, uint8_t *str);
-Std_ReturnType convert_uint32_to_string(uint8_t value, uint8_t *str);
+
 
 
 
@@ -318,7 +319,7 @@ static Std_ReturnType lcd_4bit_send_enable_signal(const chr_lcd_4bit_t *lcd){
 static Std_ReturnType lcd_8bit_send_enable_signal(const chr_lcd_8bit_t *lcd){
     Std_ReturnType ret = E_OK;
     gpio_digital_port_write(lcd->lcd_en.port, lcd->lcd_en.pin, HIGH);
-    delay_us(50);
+    delay_ms(20);
     gpio_digital_port_write(lcd->lcd_en.port, lcd->lcd_en.pin, LOW);
     return ret;
 }
@@ -360,6 +361,17 @@ static Std_ReturnType lcd_4bit_set_cursor(const chr_lcd_4bit_t *lcd, uint8_t row
  //int main(){}
 
 
-
+Std_ReturnType convert_uint32_to_string(float value, uint8_t *str){
+			Std_ReturnType ret = E_OK;    
+    
+				if(NULL == str){
+						ret = E_NOT_OK;
+				}
+				else{
+					memset(str , '/0' , 11);
+					sprintf(str , "%f" , value);
+				}
+			return ret;
+}
 
 

@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "../Services/TM4C123.h"
 #include "../Services/types.h"
-#include "../Services/bit_utilities.h"
+
 #include "SysTick.h"
 
 
@@ -47,6 +47,7 @@ void gpio_digital_port_init(port_index_t port, pin_index_t pin, direction_t dire
 void gpio_digital_port_write(port_index_t port, pin_index_t pin, logic_t data);
 uint8_t gpio_digital_read(port_index_t port, pin_index_t pin);
 void gpio_digital_toggle(port_index_t port, pin_index_t pin);
-
+void SystemInit(void);
+void RGB_SETOUTPUT(unsigned char data);
 
 #endif

@@ -1,67 +1,103 @@
 #include "../../Headers/MCAL/GPIO.h"
 #include "../../Headers/MCAL/UART.h"
-//#include "../../Headers/HAL/GPS_module.h"
-//#include "../../Headers/HAL/LCD.h"
+#include "../../Headers/HAL/GPS_module.h"
+#include "../../Headers/HAL/GPS_mohamed.h"
+#include "../../Headers/HAL/LCD.h"
 #include "../../Headers/HAL/LED.h"
-//#include "../../Headers/HAL/LCD.h"
+#include "../../Headers/HAL/LCD.h"
+#include "../../Headers/Services/TM4C123.h"
 
+#include "../../../LCD_.h"
 
-//void  init(){
-// gpio_digital_port_init(PORTF_INDEX,PIN0,INPUT);
-// gpio_digital_port_init(PORTF_INDEX,PIN1,OUTPUT);
-// gpio_digital_port_write(PORTF_INDEX,PIN1,LOW);
-// UART2_Ini(); 
-//}
+double tot_distance=0;
+double speed=0;
 
-//int __main () {
-//  init();
-//  char mess[100];
-//  float currLong;
-//  float currLat;
-//  float prevLong;
-//  float prevLat;
+// points coordinates
+double lat1=0;
+double long1=0;
+extern float currentLat;
+extern float currentLong;
+extern int Read_Done;
+extern float  currLatitdegree ,currLongdgree,currLatitradian,currLongradian,total_distance,previous_longit,previous_latit,directed_currLatit,directed_currLong;
 
-//  float displacement ;
-//  float distance=0;
-// 
-//  while(1){ 
-//   uint8_t button_state = gpio_digital_read(PORTF_INDEX, PIN0);
-//   
-//   
-//    while(GPS_output_format(mess,&currLong,&currLat )==1){
-//      if(button_state==1){ 
-//      // accumulating the distance
-//      displacement= obtainDistance(currLong,currLat,prevLong,prevLat);
-//      distance+=displacement;
-//      prevLong=currLong;
-//      prevLat=currLat;
-//      }
-//      else{
-//       //turn on the LED
-//       gpio_digital_port_write(PORTF_INDEX,PIN1,HIGH);
-//       //send distance to lcd
-//       
-//       //set distance to 0
-//       distance=0;
-//      }
-//    }
-//  }
-//}
-// 
  
- 
- unsigned char button2_in;
-int __main(){ 
-int distance=30; 
-RGB_Init();
-Switches_Init();
-while(1){
- LEDs_output(0x00);
- button2_in =SW2_Input();
- if(distance>=100 || button2_in !=0x01 ){
-  LEDs_output(0x08); //GREEN 
-  }
-//else{LEDs_output(0x04); //BLUE
-//}
-}
-}
+int main(){
+	chr_lcd_8bit_t LCD;
+	LCD.lcd_en.direction = OUTPUT;
+	LCD.lcd_en.port = PORTB_INDEX;
+	LCD.lcd_en.pin = PIN4;
+	LCD.lcd_rs.direction = OUTPUT;
+	LCD.lcd_rs.port = PORTB_INDEX;
+	LCD.lcd_rs.pin = PIN0;
+
+	LCD.lcd_data[0].direction = OUTPUT;
+	LCD.lcd_data[0].port = PORTD_INDEX;
+	LCD.lcd_data[0].pin = PIN0;
+
+	LCD.lcd_data[1].direction = OUTPUT;
+	LCD.lcd_data[1].port = PORTD_INDEX;
+	LCD.lcd_data[1].pin = PIN1;
+	
+	LCD.lcd_data[2].direction = OUTPUT;
+	LCD.lcd_data[2].port = PORTD_INDEX;
+	LCD.lcd_data[2].pin = PIN2;
+
+	LCD.lcd_data[3].direction = OUTPUT;
+	LCD.lcd_data[3].port = PORTD_INDEX;
+	LCD.lcd_data[3].pin = PIN3;
+
+	LCD.lcd_data[4].direction = OUTPUT;
+	LCD.lcd_data[4].port = PORTE_INDEX;
+	LCD.lcd_data[4].pin = PIN1;
+
+	LCD.lcd_data[5].direction = OUTPUT;
+	LCD.lcd_data[5].port = PORTE_INDEX;
+	LCD.lcd_data[5].pin = PIN2;
+
+	LCD.lcd_data[6].direction = OUTPUT;
+	LCD.lcd_data[6].port = PORTE_INDEX;
+	LCD.lcd_data[6].pin = PIN3;
+
+	LCD.lcd_data[7].direction = OUTPUT;
+	LCD.lcd_data[7].port = PORTE_INDEX;
+	LCD.lcd_data[7].pin = PIN4;
+
+	
+	Std_ReturnType ret =  lcd_8bit_intialize(&LCD);
+	//ret = lcd_8bit_send_string_pos(&LCD,1,0, "GPS-Track");
+	
+	UART2_Ini();
+	UART0_Ini();
+	RGB_Init();
+  GPS_read();
+	GPS_format();
+	lat1 = to_degree(currentLat);
+  long1 = to_degree(currentLong);
+	
+
+	while (1){
+		char distancee [12];
+    
+		//ret = convert_uint32_to_string(currentLat , distance);
+		ret = lcd_8bit_send_string_pos(&LCD, 1,1,"Distace Walked :");
+		ret = convert_uint32_to_string(tot_distance , distancee);
+		ret = lcd_8bit_send_string_pos(&LCD, 2,2,distancee);
+		delay_ms(1200);
+		if (tot_distance >= 100){LEDs_output(GREEN_LED);}
+		else {LEDs_output(RED_LED);}
+		
+		
+    GPS_read();
+    GPS_format();
+			
+				currentLat = to_degree(currentLat);
+        currentLong = to_degree(currentLong);
+			
+				UART0SendFloat(currentLat);	
+				UART0SendString(",");
+				UART0SendFloat(currentLong);	
+				UART0SendString("\n");
+				tot_distance += distance(lat1 , long1 , currentLat , currentLong);
+		 }
+		  				
+	}

@@ -1,6 +1,8 @@
+
 #ifndef LCD_H
 #define LCD_H
 #include "../MCAL/GPIO.h"
+
 
 
 /* ----------------- Macro Declarations -----------------*/
@@ -55,6 +57,8 @@ typedef struct{
     pin_config_t lcd_en;
     pin_config_t lcd_data[8];   //8 pins for data
 }chr_lcd_8bit_t;
+
+
 
 /*-------------------- LCD Initialize ----------------------
 
@@ -116,6 +120,7 @@ Std_ReturnType lcd_8bit_send_custom_char(const chr_lcd_8bit_t *lcd, uint8_t row,
 
 Std_ReturnType convert_uint8_to_string (uint8_t value, uint8_t *str);
 Std_ReturnType convert_uint16_to_string(uint8_t value, uint8_t *str);
-Std_ReturnType convert_uint32_to_string(uint8_t value, uint8_t *str);
+Std_ReturnType convert_uint32_to_string(float value, uint8_t *str);
+
 
 #endif
